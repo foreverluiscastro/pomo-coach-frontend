@@ -16,12 +16,19 @@ export default function Timer({
   // time stores the total seconds on the clock
   const [time, setTime] = useState(isStudy ? studyTime * 60 : breakTime * 60); // 25 minutes in total seconds
 
+
   // This useEffect runs the timer if it is running
   useEffect(() => {
     let timerInterval;
     // before anything check if time reached zero
-    if (time === 0) {
+    if (time === -1) {
+      // check if notifications are on and send a notification
       setIsRunning(false);
+      if (Notification.permission === "granted") {
+        displayNotification()
+        console.log("Browser times up")
+      }
+
       if (session === "Study") {
         // refill the time for 25 mins
         setTime(1500);
@@ -43,6 +50,7 @@ export default function Timer({
 
     return () => clearInterval(timerInterval);
   }, [time, isRunning, session, studyTime, breakTime]);
+  
 
   // for custom study and break times
   useEffect(() => {
@@ -51,6 +59,19 @@ export default function Timer({
       setTime(session === "Study" ? studyTime * 60 : breakTime * 60);
     }
   }, [session, studyTime, breakTime, settingsSaved]);
+
+  // if notifications are on let em know the timers done
+  function displayNotification() {
+
+    if ("Notification" in window) {
+      // Your code for notifications
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          alert("Time's up!")
+        }
+      })
+    }
+  }
 
   function formatTime() {
     const minutes = Math.floor(time / 60)
@@ -80,6 +101,7 @@ export default function Timer({
 
   function handleClick(e) {
     setSession(e.target.value);
+
     if (isStudy === false) {
       setIsStudy(true);
       setIsRunning(false);
@@ -92,11 +114,14 @@ export default function Timer({
   }
 
   function handleConfirm() {
-    if (!isRunning) {
-      setIsRunning(true);
-    } else {
-      setIsRunning(false);
-    }
+    // add browser notifications for multi-tabs
+    Notification.requestPermission().then(() => {
+      if (!isRunning) {
+        setIsRunning(true);
+      } else {
+        setIsRunning(false);
+      }
+    });
   }
 
   return (

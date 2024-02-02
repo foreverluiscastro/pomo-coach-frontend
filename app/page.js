@@ -20,6 +20,9 @@ export default function Home() {
   // used to customize the study and break times
   const [settingsSaved, setSettingSaved] = useState(false);
 
+  // for the start and pause functionality
+  const [isRunning, setIsRunning] = useState(false);
+
   function handleOpenSettings() {
     setShowSettings(true);
   }
@@ -31,6 +34,7 @@ export default function Home() {
     setSettingSaved(true);
 
     handleCloseSettings();
+    setIsRunning(false)
   }
 
   function handleCloseSettings() {
@@ -47,8 +51,6 @@ export default function Home() {
             handleCloseSettings={handleCloseSettings}
             studyTime={studyTime}
             breakTime={breakTime}
-            setBreakTime={setBreakTime}
-            setStudyTime={setStudyTime}
           />
         )}
         <Timer
@@ -59,6 +61,8 @@ export default function Home() {
           studyTime={studyTime}
           breakTime={breakTime}
           settingsSaved={settingsSaved}
+          isRunning={isRunning}
+          setIsRunning={setIsRunning}
         />
         <footer className="mb-4">Made by Luis Castro.</footer>
       </div>

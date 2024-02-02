@@ -1,16 +1,20 @@
+import { useState } from "react";
+
 // Settings.js
 export default function Settings({
   handleCloseSettings,
   handleChangeSettings,
   studyTime,
   breakTime,
-  setBreakTime,
-  setStudyTime,
 }) {
+  const [formStudyTime, setFormStudyTime] = useState(studyTime)
+  const [formBreakTime, setFormBreakTime] = useState(breakTime)
+
+
   function handleSubmit(e) {
     e.preventDefault();
 
-    handleChangeSettings(parseInt(studyTime), parseInt(breakTime));
+    handleChangeSettings(parseInt(formStudyTime), parseInt(formBreakTime));
   }
 
   return (
@@ -30,16 +34,16 @@ export default function Settings({
             <label className="Label">Study Time:</label>
             <input
               className="Input"
-              value={studyTime}
-              onChange={(e) => setStudyTime(e.target.value)}
+              value={formStudyTime}
+              onChange={(e) => setFormStudyTime(e.target.value)}
             />
           </div>
           <div className="mb-4 flex items-center">
             <label className="Label">Break Time:</label>
             <input
               className="Input"
-              value={breakTime}
-              onChange={(e) => setBreakTime(e.target.value)}
+              value={formBreakTime}
+              onChange={(e) => setFormBreakTime(e.target.value)}
             />
           </div>
           <button type="submit" className="SettingsButton">

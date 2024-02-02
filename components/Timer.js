@@ -9,9 +9,9 @@ export default function Timer({
   studyTime,
   breakTime,
   settingsSaved,
+  isRunning,
+  setIsRunning
 }) {
-  // for the start abd pause functionality
-  const [isRunning, setIsRunning] = useState(false);
 
   // time stores the total seconds on the clock
   const [time, setTime] = useState(isStudy ? studyTime * 60 : breakTime * 60); // 25 minutes in total seconds

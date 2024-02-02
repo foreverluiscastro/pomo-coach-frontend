@@ -32,9 +32,9 @@ export default function Home() {
     setBreakTime(newBreakTime);
 
     setSettingSaved(true);
+    setIsRunning(false)
 
     handleCloseSettings();
-    setIsRunning(false)
   }
 
   function handleCloseSettings() {

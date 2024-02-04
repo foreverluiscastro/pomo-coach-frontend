@@ -45,7 +45,7 @@ export default function Timer({
     if (isRunning) {
       timerInterval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 1);
+      }, 1000);
     }
 
     const displayMessage = isStudy ? "to study" : "for a break";

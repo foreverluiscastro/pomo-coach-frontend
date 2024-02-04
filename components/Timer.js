@@ -23,6 +23,10 @@ export default function Timer({
     // before anything check if time reached zero
     if (time === -1) {
       // check if notifications are on and send a notification
+      const audio = new Audio("/sounds/whistle.wav")
+      audio.volume = 0.2
+      audio.play()
+
       setIsRunning(false);
       if (Notification.permission === "granted") {
         displayNotification()
@@ -41,7 +45,7 @@ export default function Timer({
     if (isRunning) {
       timerInterval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
-      }, 1000);
+      }, 1);
     }
 
     const displayMessage = isStudy ? "to study" : "for a break";
